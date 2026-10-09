@@ -6,3 +6,6 @@
 
 # MkDocs build output
 site/
+
+# SSH demo: never commit real keys
+examples/use-cases/ssh-box/authorized_keys

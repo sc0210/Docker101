@@ -21,6 +21,8 @@ nav:
   - 4 · End-to-End: 04-End-to-End.md
   - 5 · Tips & Shortcuts: 05-Tips-and-Shortcuts.md
   - 6 · Docker vs VM: 06-Docker-vs-VM.md
+  - 7 · Use Cases: 07-Use-Cases.md
+  - 8 · Resources: 08-Resources.md
 
 theme:
   name: material

@@ -1,0 +1,4 @@
+# Put your PUBLIC key here (one per line), then run `docker compose up -d --build`.
+# Generate a key if you don't have one:  ssh-keygen -t ed25519 -C you@example.com
+# Example (replace with your own):
+# ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI... you@example.com

@@ -24,6 +24,8 @@ The chapters live in [`docs/`](./docs/):
 | 4 | [End-to-End](./docs/04-End-to-End.md) | Identical-env handoff, build→ship→run, debugging runbook, hot reload |
 | 5 | [Tips & Shortcuts](./docs/05-Tips-and-Shortcuts.md) | Aliases, one-liners, gotchas, Win/macOS ↔ Linux checklist |
 | 6 | [Docker vs VM](./docs/06-Docker-vs-VM.md) | What each virtualizes, when to use which |
+| 7 | [Use Cases](./docs/07-Use-Cases.md) | Operate · data storage · ports · SSH, per use case |
+| 8 | [Resources](./docs/08-Resources.md) | Curated, link-checked docs, cheat sheets, case studies, videos |
 
 ## What else is in here
 
@@ -33,7 +35,8 @@ The chapters live in [`docs/`](./docs/):
 ├── examples/
 │   ├── hello-app/                      # minimal Python HTTP service + Dockerfile
 │   ├── frontend-multistage/            # Node build stage → nginx runtime
-│   └── compose/                        # web + postgres + redis full stack
+│   ├── compose/                        # web + postgres + redis full stack
+│   └── use-cases/                      # ssh-box · postgres · nginx-site
 ├── scripts/aliases.sh · aliases.ps1    # daily-driver shell helpers
 ├── Makefile                            # make help  (build / run / smoke / clean)
 ├── mkdocs.yml                          # static-site config (MkDocs Material)

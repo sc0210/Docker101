@@ -1,0 +1,32 @@
+# Database with persistent data — the canonical "where does my data live?" example.
+
+# Pin the project name so the volume is always `docker101-postgres_pgdata`,
+# no matter which directory you run `docker compose` from.
+name: docker101-postgres
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: devpass
+      POSTGRES_DB: app
+    ports:
+      # host:container — bound to localhost so it isn't exposed on the LAN.
+      # 55432 (not 5432) avoids clashing with a Postgres already installed on the host.
+      # Omit the "ports" block entirely if only other containers need it (they
+      # reach it as `db:5432` over the Compose network, no host port needed).
+      - "127.0.0.1:55432:5432"
+    volumes:
+      # NAMED VOLUME: Postgres data survives `down`/`up` and image upgrades.
+      # Find the host path with: docker volume inspect use-cases_pgdata
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d app"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  pgdata:

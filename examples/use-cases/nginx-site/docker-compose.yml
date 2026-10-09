@@ -1,0 +1,12 @@
+# Static site served by nginx, content bind-mounted from the host.
+# Edit html/index.html and refresh the browser — no rebuild needed.
+
+services:
+  web:
+    image: nginx:1.27-alpine
+    ports:
+      - "8080:80"               # host 8080 → container 80
+    volumes:
+      # BIND MOUNT, read-only: the host folder IS the web root.
+      - ./html:/usr/share/nginx/html:ro
+    restart: unless-stopped

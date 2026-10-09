@@ -19,6 +19,8 @@ end-to-end workflows. Written with one core motivation in mind:
 | 4 | [04-End-to-End.md](./04-End-to-End.md) | Full flows: first app, debugging, CI-style build → ship → run |
 | 5 | [05-Tips-and-Shortcuts.md](./05-Tips-and-Shortcuts.md) | Aliases, one-liners, gotchas, Win/macOS ↔ Linux alignment tricks |
 | 6 | [06-Docker-vs-VM.md](./06-Docker-vs-VM.md) | Docker vs virtual machines — what each virtualizes, when to use which |
+| 7 | [07-Use-Cases.md](./07-Use-Cases.md) | Recipe cards per use case: how to operate, where data lives, ports, SSH |
+| 8 | [08-Resources.md](./08-Resources.md) | Curated, link-checked docs, cheat sheets, case studies and videos |
 
 Runnable examples live in [`examples/`](../examples/). Also included:
 
@@ -87,11 +89,12 @@ Expected: `hello-world` prints a success message; the alpine shell drops you int
 │   └── deploy-pages.yml                # CD: build MkDocs site → GitHub Pages
 ├── docs/
 │   ├── index.md                        # this page
-│   └── 01-Basics.md … 06-Docker-vs-VM.md   # the guide, read in order
+│   └── 01-Basics.md … 08-Resources.md  # the guide, read in order
 └── examples/
     ├── hello-app/                      # minimal Python HTTP service + Dockerfile
     ├── frontend-multistage/            # Node build stage → nginx runtime (multi-stage)
-    └── compose/                        # web + postgres + redis full stack
+    ├── compose/                        # web + postgres + redis full stack
+    └── use-cases/                      # ssh-box · postgres · nginx-site
 ```
 
 ---

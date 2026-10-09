@@ -1,0 +1,18 @@
+# SSH login into a container — demo only.
+#   1. cp ~/.ssh/id_ed25519.pub authorized_keys      (or any public key you own)
+#   2. docker compose up -d --build
+#   3. ssh -p 2222 dev@localhost 'hostname; whoami; cat /etc/os-release | head -1'
+#   4. docker compose down
+#
+# SECURITY: bind the port to 127.0.0.1 only. Never expose an SSH container to the
+# internet without key auth, firewall rules, and fail2ban/rate-limiting.
+
+services:
+  ssh-box:
+    build: .
+    ports:
+      - "127.0.0.1:22022:22"    # host:container — localhost only (22022 avoids conflicts)
+    volumes:
+      # Mount the public key read-only. Missing file? The entrypoint warns loudly.
+      - ./authorized_keys:/run/keys/authorized_keys:ro
+    restart: unless-stopped
