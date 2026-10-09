@@ -1,4 +1,4 @@
-# 04 — End-to-End Flows
+# 03 — End-to-End Flows
 
 Three complete, copy-pasteable flows that tie everything together.
 
@@ -125,7 +125,7 @@ CI equivalent (GitHub Actions sketch):
 builds the [multi-stage example](../examples/frontend-multistage/) for
 `linux/amd64,linux/arm64`, runs a smoke test, and pushes to GHCR. The multi-stage
 image also demonstrates the "small, clean artifact" idea from
-[03-Intermediate](./03-Intermediate.md#4-multi-stage-builds-small-clean-images).
+[03-Intermediate](./02-Intermediate.md#4-multi-stage-builds-small-clean-images).
 
 ---
 
@@ -201,4 +201,4 @@ docker compose logs -f api
 
 You get: isolated Linux runtime + native editor + instant reload.
 
-Next: [05-Tips-and-Shortcuts.md](./05-Tips-and-Shortcuts.md)
+Next: [04-Use-Cases-and-Recipes.md](./04-Use-Cases-and-Recipes.md)

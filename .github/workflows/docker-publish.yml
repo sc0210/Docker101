@@ -1,7 +1,7 @@
 name: docker
 
 # Build the multi-stage example and (optionally) publish it to GitHub Container Registry.
-# Demonstrates the "build → ship → run" flow from docs/04-End-to-End.md.
+# Demonstrates the "build → ship → run" flow from docs/03-End-to-End.md.
 
 on:
   push:

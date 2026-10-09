@@ -1,4 +1,4 @@
-# 09 — Disk Space & Cache Maintenance
+# 05 — Operations & Maintenance
 
 Docker is generous: it caches aggressively and never deletes anything you might
 reuse — so an unmaintained machine quietly fills up. This chapter shows **what
@@ -145,7 +145,7 @@ docker buildx prune --builder default -f
 ### Stop cache from growing so fast
 
 1. **Order Dockerfile layers well** — deps before source (see
-   [03-Intermediate §3](./03-Intermediate.md#3-dockerfile-best-practices)). Good
+   [03-Intermediate §3](./02-Intermediate.md#3-dockerfile-best-practices)). Good
    ordering means fewer, reused cache entries.
 2. **Cache mounts** — keep package downloads out of layers *and* out of the
    final image, while still caching them:
@@ -285,7 +285,7 @@ docker buildx prune -f
 | Habit | Saves |
 |---|---|
 | `.dockerignore` (`node_modules`, `.git`, caches, `.venv`) | build context + cache size |
-| Multi-stage builds ([03-Intermediate §4](./03-Intermediate.md#4-multi-stage-builds-small-clean-images)) | hundreds of MB per image |
+| Multi-stage builds ([03-Intermediate §4](./02-Intermediate.md#4-multi-stage-builds-small-clean-images)) | hundreds of MB per image |
 | `-slim` / `alpine` base images | 100s of MB |
 | `pip --no-cache-dir`, `apt-get clean && rm -rf /var/lib/apt/lists/*` in the **same** `RUN` | 10s–100s MB |
 | `RUN --mount=type=cache` for package managers | cache without image bloat |
@@ -353,4 +353,4 @@ truncate -s 0 "$(docker inspect --format='{{.LogPath}}' NAME)"   # Linux
 
 ---
 
-← Back: [08-Resources.md](./08-Resources.md) · Home: [index.md](./index.md)
+← Back: [04-Use-Cases-and-Recipes.md](./04-Use-Cases-and-Recipes.md) · Next: [06-Cheatsheet.md](./06-Cheatsheet.md) · [Home](./index.md)

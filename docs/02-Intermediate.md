@@ -1,4 +1,4 @@
-# 03 — Intermediate Topics
+# 02 — Intermediate Topics
 
 ## 1. Volumes: where data really lives
 
@@ -219,4 +219,4 @@ docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/you/app:1.0 --
   `docker secret` (Swarm).
 - Pin image digests (`image@sha256:...`) for production reproducibility.
 
-Next: [04-End-to-End.md](./04-End-to-End.md)
+Next: [03-End-to-End.md](./03-End-to-End.md)

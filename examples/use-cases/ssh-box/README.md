@@ -3,7 +3,7 @@
 **When you actually need this:** interactive access that must survive on its own
 (shared jump box, a service you can't `exec` into, tooling that speaks SSH).
 For normal local work, prefer `docker exec` — see
-[docs/07-Use-Cases.md](../../docs/07-Use-Cases.md).
+[docs/04-Use-Cases-and-Recipes.md](../../docs/04-Use-Cases-and-Recipes.md).
 
 ## Run it
 
@@ -32,4 +32,4 @@ docker compose down
 - Containers are meant to run **one foreground process**, not an init + sshd.
 
 Use this pattern deliberately, not by default. Full discussion in
-[`docs/07-Use-Cases.md`](../../docs/07-Use-Cases.md#3-ssh-login-three-patterns).
+[`docs/04-Use-Cases-and-Recipes.md`](../../docs/04-Use-Cases-and-Recipes.md#3-ssh-login-three-patterns).

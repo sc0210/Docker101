@@ -15,16 +15,16 @@ site_dir: site
 
 nav:
   - Home: index.md
-  - 1 · Basics: 01-Basics.md
-  - 2 · Command Cheatsheet: 02-Command-Cheatsheet.md
-  - 3 · Intermediate: 03-Intermediate.md
-  - 4 · End-to-End: 04-End-to-End.md
-  - 5 · Tips & Shortcuts: 05-Tips-and-Shortcuts.md
-  - 6 · Docker vs VM: 06-Docker-vs-VM.md
-  - 7 · Use Cases: 07-Use-Cases.md
-  - 8 · Resources: 08-Resources.md
-  - 9 · Disk & Cache: 09-Maintenance-and-Disk.md
-  - 10 · Recipes: 10-Recipes.md
+  - Learn:
+      - 1 · Basics: 01-Basics.md
+      - 2 · Intermediate: 02-Intermediate.md
+      - 3 · End-to-End: 03-End-to-End.md
+  - Guides:
+      - 4 · Use Cases & Recipes: 04-Use-Cases-and-Recipes.md
+      - 5 · Operations & Maintenance: 05-Operations-and-Maintenance.md
+  - Reference:
+      - 6 · Cheatsheet: 06-Cheatsheet.md
+      - 7 · Resources: 07-Resources.md
 
 theme:
   name: material
@@ -74,6 +74,18 @@ markdown_extensions:
 
 plugins:
   - search
+  # Keep old chapter URLs working after the outline was compacted.
+  - redirects:
+      redirect_maps:
+        02-Command-Cheatsheet.md: 06-Cheatsheet.md
+        03-Intermediate.md: 02-Intermediate.md
+        04-End-to-End.md: 03-End-to-End.md
+        05-Tips-and-Shortcuts.md: 06-Cheatsheet.md
+        06-Docker-vs-VM.md: 01-Basics.md
+        07-Use-Cases.md: 04-Use-Cases-and-Recipes.md
+        08-Resources.md: 07-Resources.md
+        09-Maintenance-and-Disk.md: 05-Operations-and-Maintenance.md
+        10-Recipes.md: 04-Use-Cases-and-Recipes.md
 
 # Links pointing at non-doc repo files (../Makefile, ../examples/, ../scripts/)
 # are valid on GitHub but not resolvable inside the MkDocs site — warn, don't fail.

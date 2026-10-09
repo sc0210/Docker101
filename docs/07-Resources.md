@@ -1,4 +1,4 @@
-# 08 — Curated Resources
+# 07 — Curated Resources
 
 A **filtered**, link-checked set of open-source docs, cheat sheets, case studies,
 and videos. Nothing here is a bare link dump — each entry says *why* it earned a
@@ -28,12 +28,12 @@ place.
 | [Dockerfile reference](https://docs.docker.com/reference/dockerfile/) | Every instruction, spelled out — use while writing `Dockerfile` |
 | [Compose file reference](https://docs.docker.com/reference/compose-file/) | The definitive `ports` / `volumes` / `healthcheck` syntax |
 | [Multi-stage builds](https://docs.docker.com/build/building/multi-stage/) | The pattern behind our [frontend example](../examples/frontend-multistage/) |
-| [Volumes](https://docs.docker.com/engine/storage/volumes/) | Where data lives; backs [§6 of Use Cases](./07-Use-Cases.md#6-data--the-fine-print) |
+| [Volumes](https://docs.docker.com/engine/storage/volumes/) | Where data lives; backs [§6 of Use Cases](./04-Use-Cases-and-Recipes.md#6-data--the-fine-print) |
 | [Publishing ports](https://docs.docker.com/get-started/docker-concepts/running-containers/publishing-ports/) | Clear explanation of `host:container` |
 | [`docker container port`](https://docs.docker.com/reference/cli/docker/container/port/) | Inspecting live mappings |
 | [Contexts & remote hosts](https://docs.docker.com/engine/manage-resources/contexts/) | `docker context` / Docker over SSH (Use Cases §3, Pattern B) |
 | [Docker Scout](https://docs.docker.com/scout/) | Built-in image vulnerability analysis |
-| [Build best practices](https://docs.docker.com/build/building/best-practices/) | The official checklist behind our [Intermediate](./03-Intermediate.md) advice |
+| [Build best practices](https://docs.docker.com/build/building/best-practices/) | The official checklist behind our [Intermediate](./02-Intermediate.md) advice |
 | [Multi-platform builds](https://docs.docker.com/build/building/multi-platform/) | `linux/amd64` + `linux/arm64` from one command |
 | [Buildx Bake](https://docs.docker.com/build/bake/) | Declarative build config — CI-friendly (see [§13](#13-build--ci)) |
 | [Compose secrets](https://docs.docker.com/compose/how-tos/use-secrets/) | Keep passwords out of `environment:` (recipes §secrets) |
@@ -105,7 +105,7 @@ place.
 | [lazydocker](https://github.com/jesseduffield/lazydocker) | TUI | Terminal UI for containers/volumes/images |
 | [Portainer](https://www.portainer.io/) | Web UI | Manage Docker on a host/self-hosted box |
 | [Watchtower](https://github.com/containrrr/watchtower) | Auto-update | Pulls new image tags and restarts containers |
-| [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/) | Images | Ready data-science stacks (see [Use Cases §4.4](./07-Use-Cases.md#44-data-science--jupyter-port--token-no-ssh)) |
+| [Jupyter Docker Stacks](https://jupyter-docker-stacks.readthedocs.io/) | Images | Ready data-science stacks (see [Use Cases §4.4](./04-Use-Cases-and-Recipes.md#44-data-science--jupyter-port--token-no-ssh)) |
 
 ## 7. Remote access & dev containers
 
@@ -188,4 +188,4 @@ right table. In the PR, state: **what it teaches, who it's for, and when it was
 last updated.** A link that fails any criterion gets rejected — the value of this
 page is in what it *excludes*.
 
-Back: [07-Use-Cases.md](./07-Use-Cases.md) · [Home](./index.md)
+Back: [06-Cheatsheet.md](./06-Cheatsheet.md) · [Home](./index.md)

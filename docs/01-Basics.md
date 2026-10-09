@@ -119,4 +119,63 @@ docker image prune          # delete dangling images
 docker system prune -a --volumes   # ⚠️ nukes everything unused (images too)
 ```
 
-Next: [02-Command-Cheatsheet.md](./02-Command-Cheatsheet.md)
+## 8. Docker vs a virtual machine
+
+*"Isn't this just a VM?"* — no. They virtualize at different layers: a **VM
+virtualizes hardware** (each VM boots its **own OS kernel**); a **container
+virtualizes the OS** (all containers **share the host kernel**), isolated by
+**namespaces** (what a process can *see*) and **cgroups** (what it can *use*).
+
+```
+                 VIRTUAL MACHINES                              CONTAINERS
+        ┌───────────────────────────────┐          ┌───────────────────────────────┐
+        │  App A    App B    App C      │          │  App A    App B    App C      │
+        ├─────────┬─────────┬───────────┤          ├─────────┬─────────┬───────────┤
+        │ Bins/Lib│ Bins/Lib│ Bins/Lib  │          │ Bins/Lib│ Bins/Lib│ Bins/Lib  │
+        ├─────────┴─────────┴───────────┤          ├─────────┴─────────┴───────────┤
+        │   Guest OS   │  Guest OS      │  ← each  │      Container runtime         │
+        │   (full kernel, drivers)      │    VM has│      (share ONE kernel)        │
+        ├───────────────────────────────┤    its   ├───────────────────────────────┤
+        │        Hypervisor             │    own OS│         Host OS kernel         │
+        ├───────────────────────────────┤          ├───────────────────────────────┤
+        │        Host OS / Hardware     │          │        Host OS / Hardware      │
+        └───────────────────────────────┘          └───────────────────────────────┘
+          Heavy: GBs, boots in minutes               Light: MBs, starts in seconds
+```
+
+| Dimension | Virtual machine | Container |
+|---|---|---|
+| Virtualizes | Hardware | Operating system (process isolation) |
+| Guest OS | Full OS + kernel per VM | None — shares the host kernel |
+| Size | GBs (2–20 GB) | MBs (5 MB–1 GB) |
+| Start time | 30 s–minutes | milliseconds–seconds |
+| Density per host | a handful | dozens–hundreds |
+| Isolation | Very strong (hardware boundary) | Strong, but shares the kernel |
+| Performance | Noticeable overhead | Near-native |
+| Portability | Large, hypervisor-specific | Small, OCI-standard |
+| Best for | Different kernels, hard tenant isolation, legacy apps | Microservices, CI, dev environments, shipping apps |
+
+**"Containers are Linux."** A Linux container needs a Linux kernel. On Windows
+that kernel comes from **WSL2**; on macOS from a small hidden Linux VM (Docker
+Desktop / colima / Lima). So there *is* one VM underneath on those hosts — but
+**one shared by all containers**, not one per app. That's exactly why the
+"identical Linux environment" promise holds: the OS differences live in the host
+engine, never in the container.
+
+```
+Cloud / production                          Your laptop (Windows/macOS)
+  └── VM or bare metal (hypervisor)           └── One lightweight Linux VM (WSL2 / Docker Desktop)
+        └── container runtime (containerd)          └── Many Linux containers  ← your dev envs
+              └── many containers
+```
+
+Use a **VM** when you need a different kernel, the strongest tenant isolation, or
+legacy whole-machine apps. Use **containers** for apps and dev environments. In
+practice they compose — **VMs host containers.**
+
+> Try it: `docker run --rm alpine uname -r` prints the *host's* kernel version —
+> proof that containers share one kernel.
+
+---
+
+Next: [02-Intermediate.md](./02-Intermediate.md)

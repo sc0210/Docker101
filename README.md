@@ -15,19 +15,16 @@ topics → end-to-end workflows — written with one core motivation:
 
 The chapters live in [`docs/`](./docs/):
 
-| # | Chapter | What you'll learn |
-|---|---------|-------------------|
-| — | [Home / Overview](./docs/index.md) | Roadmap, mental model, quick start |
-| 1 | [Basics](./docs/01-Basics.md) | Why Docker, images vs containers, first commands |
-| 2 | [Command Cheatsheet](./docs/02-Command-Cheatsheet.md) | Daily commands grouped by task |
-| 3 | [Intermediate](./docs/03-Intermediate.md) | Volumes, networking, Dockerfile best practices, multi-stage, Compose |
-| 4 | [End-to-End](./docs/04-End-to-End.md) | Identical-env handoff, build→ship→run, debugging runbook, hot reload |
-| 5 | [Tips & Shortcuts](./docs/05-Tips-and-Shortcuts.md) | Aliases, one-liners, gotchas, Win/macOS ↔ Linux checklist |
-| 6 | [Docker vs VM](./docs/06-Docker-vs-VM.md) | What each virtualizes, when to use which |
-| 7 | [Use Cases](./docs/07-Use-Cases.md) | Operate · data storage · ports · SSH, per use case |
-| 8 | [Resources](./docs/08-Resources.md) | Curated, link-checked docs, cheat sheets, case studies, videos |
-| 9 | [Disk & Cache](./docs/09-Maintenance-and-Disk.md) | What eats disk, safe cleanup ladder, logs, Docker Desktop VM disk |
-| 10 | [Recipes](./docs/10-Recipes.md) | Ready-to-run stacks (Caddy/Traefik, monitoring, Gitea, Vaultwarden…), operate/data/ports/SSH |
+| Track | # | Chapter | What you'll learn |
+|-------|---|---------|-------------------|
+| — | — | [Home / Overview](./docs/index.md) | Roadmap, mental model, quick start |
+| **Learn** | 1 | [Basics](./docs/01-Basics.md) | Why Docker, images vs containers, first commands, Docker vs a VM |
+| | 2 | [Intermediate](./docs/02-Intermediate.md) | Volumes, networking, Dockerfile best practices, multi-stage, Compose |
+| | 3 | [End-to-End](./docs/03-End-to-End.md) | Identical-env handoff, build→ship→run, debugging runbook, hot reload |
+| **Guides** | 4 | [Use Cases & Recipes](./docs/04-Use-Cases-and-Recipes.md) | Operate · data · ports · SSH framework + ready-to-run stacks |
+| | 5 | [Operations & Maintenance](./docs/05-Operations-and-Maintenance.md) | Disk & cache, safe cleanup, logs, Docker Desktop VM disk |
+| **Reference** | 6 | [Cheatsheet](./docs/06-Cheatsheet.md) | Commands, aliases, tips, gotchas, Win/macOS ↔ Linux checklist |
+| | 7 | [Resources](./docs/07-Resources.md) | Curated, link-checked docs, cheat sheets, case studies, videos |
 
 ## What else is in here
 
@@ -40,7 +37,7 @@ The chapters live in [`docs/`](./docs/):
 │   ├── compose/                        # web + postgres + redis full stack
 │   ├── use-cases/                      # ssh-box · postgres · nginx-site
 │   └── recipes/                        # caddy-static · uptime-kuma · monitoring
-├── scripts/aliases.sh · aliases.ps1 · docker-disk-report.sh
+├── scripts/aliases.sh · aliases.ps1 · docker-disk-report.sh · check-links.sh
 ├── Makefile                            # make help  (build / run / smoke / clean / disk)
 ├── mkdocs.yml                          # static-site config (MkDocs Material)
 ├── requirements-docs.txt
