@@ -127,7 +127,7 @@ docker build -t web:1.0 .   # final image contains ONLY the runtime stage
 Result: 1 GB build tools → ~25 MB final image, fewer CVEs, faster pulls.
 Same pattern works for Go (`golang` → `scratch`/`alpine`), Java (JDK → JRE), Python.
 
-▶ **Runnable version**: [`examples/frontend-multistage/`](./examples/frontend-multistage/)
+▶ **Runnable version**: [`examples/frontend-multistage/`](../examples/frontend-multistage/)
 — Node build stage → nginx runtime stage. Try it:
 
 ```bash

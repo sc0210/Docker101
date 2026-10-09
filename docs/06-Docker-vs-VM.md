@@ -138,4 +138,4 @@ that even there, containers share *one* kernel, not one-per-app.
 
 ---
 
-← Back: [README](./README.md) · Related: [01-Basics](./01-Basics.md)
+← Back: [Home](./index.md) · Related: [01-Basics](./01-Basics.md)

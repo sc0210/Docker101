@@ -1,0 +1,83 @@
+# MkDocs configuration — publishes this repo as a static docs site via GitHub Pages.
+# Local preview:   docker run --rm -it -p 8000:8000 -v "$PWD":/docs squidfunk/mkdocs-material
+# Docs:            https://squidfunk.github.io/mkdocs-material/
+
+site_name: Docker 101
+site_description: Docker basics → intermediate → end-to-end, tuned for Windows/macOS ↔ Linux alignment
+# IMPORTANT: replace with your repo once known, e.g. https://<user>.github.io/docker101/
+site_url: https://example.github.io/docker101/
+repo_name: docker101
+# Set this to your GitHub repo URL so the header shows a repo link:
+# repo_url: https://github.com/<user>/docker101
+# Needs an absolute URL once repo_url is set, e.g.:
+# edit_uri: edit/main/docs/
+
+# The guide lives in docs/ (a child of the config file, as MkDocs requires).
+docs_dir: docs
+site_dir: site
+
+nav:
+  - Home: index.md
+  - 1 · Basics: 01-Basics.md
+  - 2 · Command Cheatsheet: 02-Command-Cheatsheet.md
+  - 3 · Intermediate: 03-Intermediate.md
+  - 4 · End-to-End: 04-End-to-End.md
+  - 5 · Tips & Shortcuts: 05-Tips-and-Shortcuts.md
+  - 6 · Docker vs VM: 06-Docker-vs-VM.md
+
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: light blue
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - navigation.sections
+    - toc.follow
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  - search
+
+# Links pointing at non-doc repo files (../Makefile, ../examples/, ../scripts/)
+# are valid on GitHub but not resolvable inside the MkDocs site — warn, don't fail.
+validation:
+  links:
+    not_found: warn
+    absolute_links: ignore
+    unrecognized_links: ignore

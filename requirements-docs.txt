@@ -1,0 +1,2 @@
+# Python dependencies for building the docs site (used by CI and local builds).
+mkdocs-material==9.5.44
