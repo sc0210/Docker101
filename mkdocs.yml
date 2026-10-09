@@ -4,13 +4,10 @@
 
 site_name: Docker 101
 site_description: Docker basics → intermediate → end-to-end, tuned for Windows/macOS ↔ Linux alignment
-# IMPORTANT: replace with your repo once known, e.g. https://<user>.github.io/docker101/
-site_url: https://example.github.io/docker101/
-repo_name: docker101
-# Set this to your GitHub repo URL so the header shows a repo link:
-# repo_url: https://github.com/<user>/docker101
-# Needs an absolute URL once repo_url is set, e.g.:
-# edit_uri: edit/main/docs/
+site_url: https://sc0210.github.io/Docker101/
+repo_name: sc0210/Docker101
+repo_url: https://github.com/sc0210/Docker101
+edit_uri: edit/main/docs/
 
 # The guide lives in docs/ (a child of the config file, as MkDocs requires).
 docs_dir: docs

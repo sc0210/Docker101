@@ -7,8 +7,7 @@ topics → end-to-end workflows — written with one core motivation:
 > Docker gives us a clean, isolated, identical Linux environment to share —
 > regardless of which host OS each teammate uses.
 
-🌐 **Read it as a website:** `https://YOUR-USERNAME.github.io/docker101/`
-(replace with your URL after the first deploy — see [Publishing](#publishing))
+🌐 **Read it as a website:** https://sc0210.github.io/Docker101/
 
 ---
 
@@ -63,11 +62,10 @@ and deployed to **GitHub Pages** by
 **One-time setup after you push to GitHub:**
 
 1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-2. In [`mkdocs.yml`](./mkdocs.yml), set your real URLs:
-   - `site_url: https://<user>.github.io/docker101/`
-   - `repo_url: https://github.com/<user>/docker101` (uncomment)
-   - `edit_uri: edit/main/docs/`
+2. URLs are already configured in [`mkdocs.yml`](./mkdocs.yml) for this repo
+   (`site_url`, `repo_url`, `edit_uri`).
 3. Push to `main` — the workflow builds and publishes automatically.
+   Live at **https://sc0210.github.io/Docker101/**.
 
 **Preview locally** (Docker, nothing installed on your machine):
 
