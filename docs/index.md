@@ -21,6 +21,7 @@ end-to-end workflows. Written with one core motivation in mind:
 | 6 | [06-Docker-vs-VM.md](./06-Docker-vs-VM.md) | Docker vs virtual machines — what each virtualizes, when to use which |
 | 7 | [07-Use-Cases.md](./07-Use-Cases.md) | Recipe cards per use case: how to operate, where data lives, ports, SSH |
 | 8 | [08-Resources.md](./08-Resources.md) | Curated, link-checked docs, cheat sheets, case studies and videos |
+| 9 | [09-Maintenance-and-Disk.md](./09-Maintenance-and-Disk.md) | Disk & cache: what grows, safe cleanup ladder, logs, Docker Desktop VM disk |
 
 Runnable examples live in [`examples/`](../examples/). Also included:
 
@@ -83,13 +84,14 @@ Expected: `hello-world` prints a success message; the alpine shell drops you int
 ├── .gitattributes                      # force LF (Win ↔ Linux safety)
 ├── scripts/
 │   ├── aliases.sh                      # bash/zsh/Git Bash/WSL helpers
-│   └── aliases.ps1                     # PowerShell helpers
+│   ├── aliases.ps1                     # PowerShell helpers
+│   └── docker-disk-report.sh           # read-only disk usage report (make disk)
 ├── .github/workflows/
 │   ├── docker-publish.yml              # CI: multi-arch build + smoke test + GHCR
 │   └── deploy-pages.yml                # CD: build MkDocs site → GitHub Pages
 ├── docs/
 │   ├── index.md                        # this page
-│   └── 01-Basics.md … 08-Resources.md  # the guide, read in order
+│   └── 01-Basics.md … 09-Maintenance-and-Disk.md   # the guide, read in order
 └── examples/
     ├── hello-app/                      # minimal Python HTTP service + Dockerfile
     ├── frontend-multistage/            # Node build stage → nginx runtime (multi-stage)

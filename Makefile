@@ -7,7 +7,7 @@ FRONTEND_DIR := examples/frontend-multistage
 HELLO_DIR := examples/hello-app
 
 .PHONY: help hello-build hello-run frontend-build frontend-run compose-up compose-down \
-        compose-logs compose-ps smoke sizes clean prune
+        compose-logs compose-ps smoke sizes clean prune disk prune-cache
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -60,3 +60,11 @@ prune: ## Reclaim disk (containers, dangling images, build cache)
 	docker container prune -f
 	docker image prune -f
 	docker builder prune -f
+
+disk: ## Report Docker disk usage (read-only, deletes nothing)
+	sh scripts/docker-disk-report.sh
+
+prune-cache: ## Soft prune: stopped containers + dangling images + build cache (keep 10GB)
+	docker container prune -f
+	docker image prune -f
+	docker buildx prune -f --keep-storage 10GB

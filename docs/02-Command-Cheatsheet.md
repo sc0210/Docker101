@@ -129,10 +129,14 @@ docker compose up SERVICE --build      # rebuild one service
 docker system df [-v]        # disk usage (‑v = per-image breakdown)
 docker system prune -a       # ⚠️ reclaim everything unused
 docker builder prune         # clear build cache only
+docker buildx du             # build-cache size (BuildKit)
 docker info                  # daemon config, storage driver, plugins
 docker version               # client & server versions
 docker context ls            # multiple Docker hosts (local, remote, test)
 ```
+
+> **Full playbook**: [09-Maintenance-and-Disk.md](./09-Maintenance-and-Disk.md) —
+> what grows, the safe cleanup ladder, log rotation, and the Docker Desktop VM disk.
 
 ## Inspection / debugging one-liners
 

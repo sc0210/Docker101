@@ -26,6 +26,7 @@ The chapters live in [`docs/`](./docs/):
 | 6 | [Docker vs VM](./docs/06-Docker-vs-VM.md) | What each virtualizes, when to use which |
 | 7 | [Use Cases](./docs/07-Use-Cases.md) | Operate · data storage · ports · SSH, per use case |
 | 8 | [Resources](./docs/08-Resources.md) | Curated, link-checked docs, cheat sheets, case studies, videos |
+| 9 | [Disk & Cache](./docs/09-Maintenance-and-Disk.md) | What eats disk, safe cleanup ladder, logs, Docker Desktop VM disk |
 
 ## What else is in here
 
@@ -37,7 +38,7 @@ The chapters live in [`docs/`](./docs/):
 │   ├── frontend-multistage/            # Node build stage → nginx runtime
 │   ├── compose/                        # web + postgres + redis full stack
 │   └── use-cases/                      # ssh-box · postgres · nginx-site
-├── scripts/aliases.sh · aliases.ps1    # daily-driver shell helpers
+├── scripts/aliases.sh · aliases.ps1 · docker-disk-report.sh
 ├── Makefile                            # make help  (build / run / smoke / clean)
 ├── mkdocs.yml                          # static-site config (MkDocs Material)
 ├── requirements-docs.txt
