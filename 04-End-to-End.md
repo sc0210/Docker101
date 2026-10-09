@@ -121,6 +121,12 @@ CI equivalent (GitHub Actions sketch):
     platforms: linux/amd64
 ```
 
+▶ **Working version**: [`.github/workflows/docker-publish.yml`](./.github/workflows/docker-publish.yml)
+builds the [multi-stage example](./examples/frontend-multistage/) for
+`linux/amd64,linux/arm64`, runs a smoke test, and pushes to GHCR. The multi-stage
+image also demonstrates the "small, clean artifact" idea from
+[03-Intermediate](./03-Intermediate.md#4-multi-stage-builds-small-clean-images).
+
 ---
 
 ## Flow C — Debug a misbehaving container (runbook)

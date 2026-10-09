@@ -127,6 +127,22 @@ docker build -t web:1.0 .   # final image contains ONLY the runtime stage
 Result: 1 GB build tools → ~25 MB final image, fewer CVEs, faster pulls.
 Same pattern works for Go (`golang` → `scratch`/`alpine`), Java (JDK → JRE), Python.
 
+▶ **Runnable version**: [`examples/frontend-multistage/`](./examples/frontend-multistage/)
+— Node build stage → nginx runtime stage. Try it:
+
+```bash
+make frontend-build
+docker images docker101-frontend:local   # final image is nginx-sized, no Node
+make frontend-run                        # http://localhost:8080
+```
+
+The build stage's toolchain (Node, npm, source) is discarded with Stage 1 and
+never reaches the final image — only the built `dist/` files are copied over.
+
+Measured on this repo: the `build` stage (Node) is **~157 MB**, while the final
+`nginx`-based image is **~47 MB** — and the final image contains no Node, no npm,
+and no source code.
+
 ## 5. Docker Compose — the whole environment in one file
 
 ```yaml

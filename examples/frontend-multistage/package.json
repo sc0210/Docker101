@@ -1,0 +1,9 @@
+{
+  "name": "frontend-multistage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zero-dependency static build to demo multi-stage Docker builds",
+  "scripts": {
+    "build": "node build.js"
+  }
+}

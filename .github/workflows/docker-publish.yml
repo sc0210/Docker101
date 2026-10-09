@@ -1,0 +1,78 @@
+name: docker
+
+# Build the multi-stage example and (optionally) publish it to GitHub Container Registry.
+# Demonstrates the "build → ship → run" flow from docs/04-End-to-End.md.
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Buildx (for multi-arch + cache)
+        uses: docker/setup-buildx-action@v3
+
+      # Only log in when we're actually going to push (not on PRs).
+      - name: Log in to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata (tags + labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=sha,format=short
+
+      - name: Build (and push when allowed)
+        uses: docker/build-push-action@v6
+        with:
+          context: examples/frontend-multistage
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Load the built image locally and smoke-test it before anyone ships it.
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build for local host
+        uses: docker/build-push-action@v6
+        with:
+          context: examples/frontend-multistage
+          push: false
+          load: true
+          tags: docker101/frontend:ci
+      - name: Run and curl
+        run: |
+          docker run -d --name web -p 8080:80 docker101/frontend:ci
+          for i in $(seq 1 10); do
+            curl -fsS http://localhost:8080 && break || sleep 1
+          done
+          docker logs web
+          docker stop web

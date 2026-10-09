@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Docker 101 — multi-stage demo</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 4rem auto; padding: 0 1rem; }
+      code { background: #f0f0f0; padding: .15rem .35rem; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>🐳 Built in a Node stage, served by nginx</h1>
+    <p>
+      This file was produced by <code>build.js</code> inside the
+      <code>node:22-alpine</code> <em>build</em> stage, then copied into a
+      <code>nginx:alpine</code> <em>runtime</em> stage. Node never ships to production.
+    </p>
+    <p id="arch"></p>
+    <script src="app.js"></script>
+  </body>
+</html>

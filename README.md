@@ -18,8 +18,15 @@ end-to-end workflows. Written with one core motivation in mind:
 | 3 | [03-Intermediate.md](./03-Intermediate.md) | Networking, volumes, Dockerfile best practices, Compose, multi-stage builds |
 | 4 | [04-End-to-End.md](./04-End-to-End.md) | Full flows: first app, debugging, CI-style build → ship → run |
 | 5 | [05-Tips-and-Shortcuts.md](./05-Tips-and-Shortcuts.md) | Aliases, one-liners, gotchas, Win/macOS ↔ Linux alignment tricks |
+| 6 | [06-Docker-vs-VM.md](./06-Docker-vs-VM.md) | Docker vs virtual machines — what each virtualizes, when to use which |
 
-Runnable examples live in [`examples/`](./examples/).
+Runnable examples live in [`examples/`](./examples/). Also included:
+
+- [`Makefile`](./Makefile) — `make help` for build/run/compose/smoke/clean targets.
+- [`scripts/aliases.sh`](./scripts/aliases.sh) · [`scripts/aliases.ps1`](./scripts/aliases.ps1)
+  — daily-driver aliases for bash/zsh and PowerShell.
+- [`.github/workflows/docker-publish.yml`](./.github/workflows/docker-publish.yml)
+  — CI that builds (multi-arch), smoke-tests, and publishes the multi-stage image to GHCR.
 
 ---
 
@@ -43,6 +50,9 @@ Runnable examples live in [`examples/`](./examples/).
 - **The key promise**: the *same image* runs identically on Windows, macOS, and Linux —
   because inside the container it's always a Linux userspace.
 
+> Not a tiny VM: a container isolates a **process** using the host's shared Linux
+> kernel (namespaces + cgroups). See [Docker vs VM](./06-Docker-vs-VM.md).
+
 ---
 
 ## Quick start (verify your install)
@@ -55,6 +65,27 @@ docker run --rm -it alpine sh  # tiny interactive Linux shell
 
 Expected: `hello-world` prints a success message; the alpine shell drops you into
 `/ #` — a real Linux environment, even on Windows or macOS.
+
+---
+
+## Repo layout
+
+```
+.
+├── README.md
+├── 01-Basics.md … 06-Docker-vs-VM.md   # the guide, read in order
+├── Makefile                            # make help  (build / run / smoke / clean)
+├── .gitattributes                      # force LF (Win ↔ Linux safety)
+├── scripts/
+│   ├── aliases.sh                      # bash/zsh/Git Bash/WSL helpers
+│   └── aliases.ps1                     # PowerShell helpers
+├── .github/workflows/
+│   └── docker-publish.yml              # CI: multi-arch build + smoke test + GHCR
+└── examples/
+    ├── hello-app/                      # minimal Python HTTP service + Dockerfile
+    ├── frontend-multistage/            # Node build stage → nginx runtime (multi-stage)
+    └── compose/                        # web + postgres + redis full stack
+```
 
 ---
 
