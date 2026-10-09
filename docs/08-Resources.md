@@ -33,6 +33,17 @@ place.
 | [`docker container port`](https://docs.docker.com/reference/cli/docker/container/port/) | Inspecting live mappings |
 | [Contexts & remote hosts](https://docs.docker.com/engine/manage-resources/contexts/) | `docker context` / Docker over SSH (Use Cases §3, Pattern B) |
 | [Docker Scout](https://docs.docker.com/scout/) | Built-in image vulnerability analysis |
+| [Build best practices](https://docs.docker.com/build/building/best-practices/) | The official checklist behind our [Intermediate](./03-Intermediate.md) advice |
+| [Multi-platform builds](https://docs.docker.com/build/building/multi-platform/) | `linux/amd64` + `linux/arm64` from one command |
+| [Buildx Bake](https://docs.docker.com/build/bake/) | Declarative build config — CI-friendly (see [§13](#13-build--ci)) |
+| [Compose secrets](https://docs.docker.com/compose/how-tos/use-secrets/) | Keep passwords out of `environment:` (recipes §secrets) |
+| [Compose `develop` / watch](https://docs.docker.com/reference/compose-file/develop/) | Hot-reload without hand-rolled bind mounts |
+| [Rootless mode](https://docs.docker.com/engine/security/rootless/) | Run the daemon as a non-root user |
+| [Engine security](https://docs.docker.com/engine/security/) | Threat model, capabilities, seccomp, AppArmor |
+| [Use Compose in production](https://docs.docker.com/compose/how-tos/production/) | What Compose *is* and isn't good at |
+| [Docker Hardened Images](https://docs.docker.com/dhi/) | Near-zero-CVE, minimal, verifiable base images |
+| [Swarm mode](https://docs.docker.com/engine/swarm/) | Built-in orchestration; the pragmatic step before K8s |
+| [Docker networks](https://docs.docker.com/engine/network/) | Bridge/overlay/host/macvlan, DNS, isolation |
 
 ## 2. Cheat sheets & quick references
 
@@ -76,6 +87,13 @@ place.
 | [freeCodeCamp — Docker Tutorial for Beginners](https://www.youtube.com/watch?v=fqMOX6JJhGo) | Long-form, full project build |
 | [Bret Fisher (@BretFisher)](https://www.youtube.com/@BretFisher) | Deep, production-oriented Docker/K8s content |
 | [Docker in 10 Minutes (2026)](https://www.youtube.com/watch?v=ZyWBs0CU2wk) | A recent, compact refresher |
+| [Techno Tim (@TechnoTim)](https://www.youtube.com/@TechnoTim) | Self-hosting + Docker Compose, clean production |
+| [Christian Lempa (@christianlempa)](https://www.youtube.com/@christianlempa) | Homelab, Traefik, automation, Ansible/Docker |
+| [Jim's Garage (@Jims-Garage)](https://www.youtube.com/@Jims-Garage) | Practical self-hosted stacks and hardening |
+| [NetworkChuck (@NetworkChuck)](https://www.youtube.com/@NetworkChuck) | Beginner-friendly networking + Docker |
+| [Traefik vs Caddy vs Nginx (video)](https://www.youtube.com/watch?v=igInrPwZuzA) | Visual comparison of the three reverse proxies |
+| [Buildx Bake (video)](https://www.youtube.com/watch?v=kE2z1b-ZRM4) | Declarative multi-platform builds in practice |
+| [Compose Watch (video)](https://www.youtube.com/watch?v=FhorvGysZ6w) | `develop.watch` hot-reload demo |
 
 ## 6. Tools worth knowing
 
@@ -95,6 +113,71 @@ place.
 |---|---|
 | [VS Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) | Edits *inside* the container — same env in the editor (pairs with our Ongoing goal) |
 | [CircleCI — How to SSH into Docker containers](https://circleci.com/blog/ssh-into-docker-container/) | Balanced walkthrough + why exec is usually better |
+| [Dev Containers spec](https://containers.dev/) | The open standard behind `.devcontainer/` |
+| [GitHub Codespaces](https://github.com/features/codespaces) | Cloud dev containers, zero local setup |
+| [Docker Dev Environments](https://docs.docker.com/desktop/features/dev-environments/) | Share a reproducible dev env from Desktop |
+
+## 8. Orchestration & scaling
+
+| Resource | Why it made the cut |
+|---|---|
+| [Docker Swarm mode](https://docs.docker.com/engine/swarm/) | Orchestration built into Docker; far simpler than K8s |
+| [Kubernetes docs](https://kubernetes.io/docs/home/) | The industry-standard orchestrator; learn it after Compose |
+| [k3s](https://k3s.io/) | Lightweight certified K8s — single binary, great on a Pi/homelab |
+| [kind](https://kind.sigs.k8s.io/) | K8s clusters in Docker containers, for local testing |
+| [Kompose](https://kompose.io/) | Convert `docker-compose.yml` → Kubernetes manifests |
+| [Compose specification](https://compose-spec.io/) | The vendor-neutral spec Compose implements |
+
+## 9. Security & supply chain
+
+| Resource | Why it made the cut |
+|---|---|
+| [OWASP Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html) | Concise, authoritative hardening rules |
+| [Docker Bench for Security](https://github.com/docker/docker-bench-security) | CIS-benchmark audit script for the host + daemon |
+| [Dockle](https://github.com/goodwithtech/dockle) | Lints built images for CIS-style misconfig |
+| [Grype](https://github.com/anchore/grype) | Fast vulnerability scanner for images/SBOMs |
+| [Syft](https://github.com/anchore/syft) | Generates SBOMs (CycloneDX/SPDX) |
+| [Cosign](https://github.com/sigstore/cosign) | Sign/verify images; keyless via Sigstore |
+| [Sigstore docs](https://docs.sigstore.dev/) | The signing/transparency-log project behind cosign |
+| [OWASP DockSec](https://github.com/OWASP/DockSec) | Static analysis of Dockerfiles for security smells |
+
+## 10. Container registries
+
+| Resource | Why it made the cut |
+|---|---|
+| [Docker Registry (Distribution)](https://github.com/distribution/distribution) | The reference self-hosted registry |
+| [Harbor](https://goharbor.io/) | CNCF registry: RBAC, scanning, signing, replication |
+| [Harbor (source)](https://github.com/goharbor/harbor) | Active CNCF project repository |
+| [GitHub Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) | Where this repo's [publish workflow](../.github/workflows/docker-publish.yml) pushes |
+
+## 11. Observability
+
+| Resource | Why it made the cut |
+|---|---|
+| [cAdvisor](https://github.com/google/cadvisor) | Per-container resource metrics, from Google |
+| [Prometheus](https://prometheus.io/) | The metrics store + query language standard |
+| [Grafana Docker dashboard 15798](https://grafana.com/grafana/dashboards/15798-docker-monitoring/) | Import-and-go dashboard for the stack above |
+| [Dozzle](https://github.com/amir20/dozzle) | Live container logs in the browser, no setup |
+| [Glances](https://github.com/nicolargo/glances) | Cross-platform top-style monitor (runs in a container) |
+
+## 12. Dev environments & testing
+
+| Resource | Why it made the cut |
+|---|---|
+| [Testcontainers](https://testcontainers.com/) | Throwaway Docker deps (DB, queue) inside integration tests |
+| [Dagger](https://dagger.io/) | Portable CI pipelines built from containers |
+| [VS Code Dev Containers](https://code.visualstudio.com/docs/devcontainers/containers) | (also listed in §7) |
+| [Dev Containers spec](https://containers.dev/) | (also listed in §7) |
+
+## 13. Build & CI
+
+| Resource | Why it made the cut |
+|---|---|
+| [Buildx Bake](https://docs.docker.com/build/bake/) | One declarative file for many targets/tags (also §1) |
+| [Bake guide](https://docs.docker.com/guides/bake/) | Step-by-step walkthrough of the above |
+| [Kaniko](https://github.com/GoogleContainerTools/kaniko) | Build images inside a container, no daemon/socket |
+| [Buildpacks](https://buildpacks.io/) | Turn source into an image without a Dockerfile |
+| [Multi-platform builds](https://docs.docker.com/build/building/multi-platform/) | (also §1) |
 
 ---
 

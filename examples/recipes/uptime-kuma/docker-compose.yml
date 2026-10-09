@@ -1,0 +1,13 @@
+# Uptime Kuma — self-hosted status/uptime monitor.
+# First visit http://localhost:3001 creates the admin account.
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptime-kuma:/app/data       # monitors, history, users
+    restart: unless-stopped
+
+volumes:
+  uptime-kuma:

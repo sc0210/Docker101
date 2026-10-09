@@ -1,0 +1,28 @@
+name: Link check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "scripts/check-links.sh"
+      - ".github/workflows/link-check.yml"
+  pull_request:
+    paths:
+      - "docs/**"
+  schedule:
+    # Weekly safety net: catches external links that rot without a docs change.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check every URL in docs/
+        run: sh scripts/check-links.sh

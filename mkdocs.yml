@@ -24,6 +24,7 @@ nav:
   - 7 · Use Cases: 07-Use-Cases.md
   - 8 · Resources: 08-Resources.md
   - 9 · Disk & Cache: 09-Maintenance-and-Disk.md
+  - 10 · Recipes: 10-Recipes.md
 
 theme:
   name: material

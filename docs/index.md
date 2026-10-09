@@ -22,6 +22,7 @@ end-to-end workflows. Written with one core motivation in mind:
 | 7 | [07-Use-Cases.md](./07-Use-Cases.md) | Recipe cards per use case: how to operate, where data lives, ports, SSH |
 | 8 | [08-Resources.md](./08-Resources.md) | Curated, link-checked docs, cheat sheets, case studies and videos |
 | 9 | [09-Maintenance-and-Disk.md](./09-Maintenance-and-Disk.md) | Disk & cache: what grows, safe cleanup ladder, logs, Docker Desktop VM disk |
+| 10 | [10-Recipes.md](./10-Recipes.md) | Ready-to-run stacks (Caddy/Traefik, monitoring, Gitea, Vaultwarden…) — operate/data/ports/SSH |
 
 Runnable examples live in [`examples/`](../examples/). Also included:
 
@@ -30,6 +31,8 @@ Runnable examples live in [`examples/`](../examples/). Also included:
   — daily-driver aliases for bash/zsh and PowerShell.
 - [`.github/workflows/docker-publish.yml`](../.github/workflows/docker-publish.yml)
   — CI that builds (multi-arch), smoke-tests, and publishes the multi-stage image to GHCR.
+- [`.github/workflows/link-check.yml`](../.github/workflows/link-check.yml)
+  — CI that verifies every URL in these docs still resolves (keeps Resources honest).
 - [`mkdocs.yml`](../mkdocs.yml) — config that publishes this guide as a static site
   (see the repo README for the live URL).
 
@@ -88,15 +91,17 @@ Expected: `hello-world` prints a success message; the alpine shell drops you int
 │   └── docker-disk-report.sh           # read-only disk usage report (make disk)
 ├── .github/workflows/
 │   ├── docker-publish.yml              # CI: multi-arch build + smoke test + GHCR
-│   └── deploy-pages.yml                # CD: build MkDocs site → GitHub Pages
+│   ├── deploy-pages.yml                # CD: build MkDocs site → GitHub Pages
+│   └── link-check.yml                  # CI: verify every URL in docs/ still resolves
 ├── docs/
 │   ├── index.md                        # this page
-│   └── 01-Basics.md … 09-Maintenance-and-Disk.md   # the guide, read in order
+│   └── 01-Basics.md … 10-Recipes.md    # the guide, read in order
 └── examples/
     ├── hello-app/                      # minimal Python HTTP service + Dockerfile
     ├── frontend-multistage/            # Node build stage → nginx runtime (multi-stage)
     ├── compose/                        # web + postgres + redis full stack
-    └── use-cases/                      # ssh-box · postgres · nginx-site
+    ├── use-cases/                      # ssh-box · postgres · nginx-site
+    └── recipes/                        # caddy-static · uptime-kuma · monitoring
 ```
 
 ---

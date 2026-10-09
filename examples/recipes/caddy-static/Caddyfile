@@ -1,0 +1,12 @@
+# Local static site on port 80 (inside the container).
+:80 {
+	root * /srv
+	file_server
+}
+
+# For a real domain, replace the block above with this — Caddy fetches and renews
+# the certificate automatically (publish 80:80 and 443:443 in compose):
+#
+# app.example.com {
+# 	reverse_proxy api:8000
+# }

@@ -7,7 +7,7 @@ FRONTEND_DIR := examples/frontend-multistage
 HELLO_DIR := examples/hello-app
 
 .PHONY: help hello-build hello-run frontend-build frontend-run compose-up compose-down \
-        compose-logs compose-ps smoke sizes clean prune disk prune-cache
+        compose-logs compose-ps smoke sizes clean prune disk prune-cache linkcheck
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -68,3 +68,6 @@ prune-cache: ## Soft prune: stopped containers + dangling images + build cache (
 	docker container prune -f
 	docker image prune -f
 	docker buildx prune -f --keep-storage 10GB
+
+linkcheck: ## Verify every URL referenced in docs/ still resolves
+	sh scripts/check-links.sh

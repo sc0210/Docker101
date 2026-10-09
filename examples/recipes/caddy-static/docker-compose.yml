@@ -1,0 +1,18 @@
+# Caddy serving a static site on :80 (published to host :8080).
+# Caddy's headline feature: automatic HTTPS. Add a real domain to Caddyfile and
+# publish 80/443 to get a Let's Encrypt cert with zero extra config.
+services:
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./html:/srv:ro
+      - caddy_data:/data         # certificates + ACME state — keep this
+      - caddy_config:/config
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

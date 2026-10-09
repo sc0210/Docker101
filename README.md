@@ -27,6 +27,7 @@ The chapters live in [`docs/`](./docs/):
 | 7 | [Use Cases](./docs/07-Use-Cases.md) | Operate · data storage · ports · SSH, per use case |
 | 8 | [Resources](./docs/08-Resources.md) | Curated, link-checked docs, cheat sheets, case studies, videos |
 | 9 | [Disk & Cache](./docs/09-Maintenance-and-Disk.md) | What eats disk, safe cleanup ladder, logs, Docker Desktop VM disk |
+| 10 | [Recipes](./docs/10-Recipes.md) | Ready-to-run stacks (Caddy/Traefik, monitoring, Gitea, Vaultwarden…), operate/data/ports/SSH |
 
 ## What else is in here
 
@@ -37,14 +38,16 @@ The chapters live in [`docs/`](./docs/):
 │   ├── hello-app/                      # minimal Python HTTP service + Dockerfile
 │   ├── frontend-multistage/            # Node build stage → nginx runtime
 │   ├── compose/                        # web + postgres + redis full stack
-│   └── use-cases/                      # ssh-box · postgres · nginx-site
+│   ├── use-cases/                      # ssh-box · postgres · nginx-site
+│   └── recipes/                        # caddy-static · uptime-kuma · monitoring
 ├── scripts/aliases.sh · aliases.ps1 · docker-disk-report.sh
-├── Makefile                            # make help  (build / run / smoke / clean)
+├── Makefile                            # make help  (build / run / smoke / clean / disk)
 ├── mkdocs.yml                          # static-site config (MkDocs Material)
 ├── requirements-docs.txt
 └── .github/workflows/
     ├── docker-publish.yml              # CI: multi-arch build + smoke test + GHCR
-    └── deploy-pages.yml                # CD: build docs → GitHub Pages
+    ├── deploy-pages.yml                # CD: build docs → GitHub Pages
+    └── link-check.yml                  # CI: verify every URL in docs/ still resolves
 ```
 
 Quick taste:
