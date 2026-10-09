@@ -1,0 +1,4 @@
+# Runtime config (real password) and the media / database bind paths
+.env
+library/
+postgres/

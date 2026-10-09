@@ -312,6 +312,10 @@ Each recipe is a complete Compose file plus the same four answers. Full, runnabl
 | Automation/webhooks | **n8n** | visual workflows |
 | Log viewer | **Dozzle** | read-only socket, browser logs |
 | Auto image updates | **Watchtower** | pulls + restarts on new tags |
+| Photos & videos | **Immich** | official compose; DB is version-coupled |
+| Files, calendar, sync | **Nextcloud** | app + MariaDB |
+| Network-wide DNS / ad-block | **Pi-hole** | DNS sinkhole with a web UI |
+| Smart home | **Home Assistant** | host networking + privileged for devices |
 
 ---
 
@@ -390,6 +394,8 @@ volumes:
 - **Data**: `letsencrypt` volume (`acme.json` — `chmod 600`)
 - **Ports**: `80`, `443`
 - **SSH**: none
+- **Local HTTPS**: runnable example with generated certs in
+  [`examples/recipes/traefik/`](../examples/recipes/traefik/) (mkcert if installed, else openssl)
 - ⚠️ Mounting the Docker socket grants control of the daemon — prefer a **read-only**
   socket (`:ro`) or socket proxy; never expose Traefik's API publicly.
 
@@ -409,7 +415,9 @@ services:
     ports: ["3300:3000"]        # 3000 is commonly taken; map to 3300
     environment:
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-admin}
-    volumes: [grafana_data:/var/lib/grafana]
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro   # auto-adds Prometheus datasource
     restart: unless-stopped
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.49.1
@@ -439,8 +447,9 @@ scrape_configs:
     static_configs: [{ targets: ["node-exporter:9100"] }]
 ```
 
-- **Operate**: `up -d`; Grafana `admin`/`admin` (set `GRAFANA_PASSWORD`); import
-  dashboard [15798](https://grafana.com/grafana/dashboards/15798-docker-monitoring/)
+- **Operate**: `up -d`; Grafana `admin`/`admin` (set `GRAFANA_PASSWORD`) — Prometheus
+  is provisioned as the default datasource, so just import dashboard
+  [15798](https://grafana.com/grafana/dashboards/15798-docker-monitoring/) and go.
 - **Data**: `prom_data`, `grafana_data` named volumes
 - **Ports**: `9090` (Prometheus), `3300` (Grafana), `8081` (cAdvisor)
 - **SSH**: none. `privileged: true` for cAdvisor is a real risk — run on trusted hosts only.
@@ -608,6 +617,112 @@ volumes:
 - **Operate**: `up -d`, finish install at `http://localhost:8080`
 - **Data**: `wp_html` (plugins/uploads) + `db_data` (database) — back up both
 - **Ports**: `8080:80`; front for TLS
+- **SSH**: none
+
+## Recipe 11 — Immich — self-hosted photo library
+
+Immich ships a maintained, **version-coupled** stack (server + ML + Postgres +
+Redis). Don't hand-roll it — start from their official compose (kept in
+[`examples/recipes/immich/`](../examples/recipes/immich/)):
+
+```bash
+cd examples/recipes/immich
+cp example.env .env            # set UPLOAD_LOCATION, DB_DATA_LOCATION, DB_PASSWORD
+docker compose up -d
+```
+
+- **Operate**: first run at `http://localhost:2283` to create the admin; upgrade with
+  `docker compose pull && docker compose up -d` (read the release notes first)
+- **Data**: `UPLOAD_LOCATION` (your media) + `DB_DATA_LOCATION` (Postgres) — **bind
+  paths on the host; back up both**. The DB image is pinned to the Immich version.
+- **Ports**: `2283`
+- **SSH**: none
+- Docs: [docs.immich.app/install/docker-compose](https://docs.immich.app/install/docker-compose)
+
+## Recipe 12 — Nextcloud — files, calendar & sync
+
+```yaml
+services:
+  db:
+    image: mariadb:11
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+      MYSQL_ROOT_PASSWORD: ${NEXTCLOUD_DB_ROOT_PASSWORD:?set it}
+      MYSQL_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?set it}
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+    volumes: [db:/var/lib/mysql]
+    restart: unless-stopped
+  app:
+    image: nextcloud:apache
+    ports: ["8080:80"]
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?set it}
+      NEXTCLOUD_TRUSTED_DOMAINS: "localhost 127.0.0.1"
+    volumes: [nextcloud:/var/www/html]
+    depends_on: [db]
+    restart: unless-stopped
+volumes:
+  db:
+  nextcloud:
+```
+
+- **Operate**: `up -d`, create the admin account at `http://localhost:8080`
+- **Data**: `nextcloud` (`/var/www/html` — config + apps) + `db` (MariaDB) — back up both
+- **Ports**: `8080:80`; front for TLS, then set `NEXTCLOUD_TRUSTED_DOMAINS`/overwrite vars
+- **SSH**: none
+
+## Recipe 13 — Pi-hole — network-wide DNS / ad-block
+
+```yaml
+services:
+  pihole:
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8090:80/tcp"                     # web UI
+    environment:
+      FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD:?set it}
+      FTLCONF_dns_listeningMode: ALL
+    volumes: [pihole:/etc/pihole]
+    cap_add: [SYS_NICE]
+    restart: unless-stopped
+volumes:
+  pihole:
+```
+
+- **Operate**: `up -d`, admin at `http://localhost:8090`
+- **Data**: `pihole` (`/etc/pihole`) — blocklists + config; back it up
+- **Ports**: `53` (DNS, tcp+udp) and `8090:80` (web). If `53` is taken (macOS
+  mDNSResponder / systemd-resolved / another container), map `8053:53` and point
+  clients at `host:8053`
+- **SSH**: none
+
+## Recipe 14 — Home Assistant — smart home
+
+```yaml
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    ports: ["8123:8123"]        # Linux: use network_mode: host instead
+    volumes:
+      - ha_config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    privileged: true            # USB / Bluetooth device access
+    restart: unless-stopped
+volumes:
+  ha_config:
+```
+
+- **Operate**: `up -d`, onboarding at `http://localhost:8123`
+- **Data**: `ha_config` (`/config`) — dashboards, integrations, `secrets.yaml`; back it up
+- **Ports**: `8123`; on **Linux** prefer `network_mode: host` (and drop `ports:`) so
+  mDNS/SSDP device discovery works — host networking is not supported on Docker Desktop
 - **SSH**: none
 
 ---

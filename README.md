@@ -36,7 +36,7 @@ The chapters live in [`docs/`](./docs/):
 │   ├── frontend-multistage/            # Node build stage → nginx runtime
 │   ├── compose/                        # web + postgres + redis full stack
 │   ├── use-cases/                      # ssh-box · postgres · nginx-site
-│   └── recipes/                        # caddy-static · uptime-kuma · monitoring
+│   └── recipes/                        # caddy · traefik · monitoring · nextcloud · immich · pi-hole · home-assistant
 ├── scripts/aliases.sh · aliases.ps1 · docker-disk-report.sh · check-links.sh
 ├── Makefile                            # make help  (build / run / smoke / clean / disk)
 ├── mkdocs.yml                          # static-site config (MkDocs Material)

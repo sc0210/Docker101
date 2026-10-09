@@ -1,0 +1,19 @@
+# Home Assistant (container, "Container" install method).
+#
+# On Linux the project recommends `network_mode: host` so HA can auto-discover
+# devices (mDNS/SSDP). Then REMOVE the `ports:` block. On macOS/Windows (Docker
+# Desktop) host networking doesn't work, so use the published port instead.
+services:
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    ports:
+      - "8123:8123"          # Linux: use network_mode: host instead of ports
+    volumes:
+      - ha_config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true          # needed for USB/Bluetooth device access
+
+volumes:
+  ha_config:

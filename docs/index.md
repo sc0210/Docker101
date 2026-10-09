@@ -100,7 +100,7 @@ Expected: `hello-world` prints a success message; the alpine shell drops you int
     ├── frontend-multistage/            # Node build stage → nginx runtime (multi-stage)
     ├── compose/                        # web + postgres + redis full stack
     ├── use-cases/                      # ssh-box · postgres · nginx-site
-    └── recipes/                        # caddy-static · uptime-kuma · monitoring
+    └── recipes/                        # caddy · traefik · monitoring · nextcloud · immich · pi-hole · home-assistant
 ```
 
 ---

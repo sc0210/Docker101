@@ -1,0 +1,22 @@
+# Pi-hole v6 — DNS sinkhole + web UI.
+# NOTE: DNS uses host port 53. If something already listens on 53 (macOS
+# mDNSResponder, systemd-resolved, another container), either free it or map a
+# high port (e.g. "8053:53") and point clients at host:8053.
+services:
+  pihole:
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8090:80/tcp"        # web UI (80 is often taken; map to 8090)
+    environment:
+      FTLCONF_webserver_api_password: ${PIHOLE_PASSWORD:?set it}
+      FTLCONF_dns_listeningMode: ALL
+    volumes:
+      - pihole:/etc/pihole
+    cap_add:
+      - SYS_NICE
+    restart: unless-stopped
+
+volumes:
+  pihole:

@@ -1,0 +1,34 @@
+# Nextcloud (Apache) + MariaDB. First run creates the admin account in the browser.
+# Set the passwords in a git-ignored .env or the environment before `up`.
+services:
+  db:
+    image: mariadb:11
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+      MYSQL_ROOT_PASSWORD: ${NEXTCLOUD_DB_ROOT_PASSWORD:?set it}
+      MYSQL_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?set it}
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+    volumes:
+      - db:/var/lib/mysql
+    restart: unless-stopped
+
+  app:
+    image: nextcloud:apache
+    ports:
+      - "8080:80"
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?set it}
+      NEXTCLOUD_TRUSTED_DOMAINS: "localhost 127.0.0.1"
+    volumes:
+      - nextcloud:/var/www/html
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  db:
+  nextcloud:

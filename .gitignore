@@ -3,6 +3,8 @@
 .env
 .env.*
 !.env.example
+# Immich ships its sample as example.env — keep the committed copy
+!examples/recipes/immich/example.env
 
 # MkDocs build output
 site/

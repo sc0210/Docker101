@@ -1,0 +1,11 @@
+# Dynamic configuration (file provider): load our local certificate and make it
+# the default for this Traefik instance.
+tls:
+  certificates:
+    - certFile: /certs/whoami.localhost.pem
+      keyFile: /certs/whoami.localhost-key.pem
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /certs/whoami.localhost.pem
+        keyFile: /certs/whoami.localhost-key.pem
