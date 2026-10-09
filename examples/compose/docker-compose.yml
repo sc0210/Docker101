@@ -1,0 +1,42 @@
+# Full-stack demo environment.
+# Run:  docker compose up -d --build
+# Check: docker compose ps  &&  curl http://localhost:8080
+# Reset: docker compose down -v
+
+services:
+  web:
+    build: ../hello-app
+    ports:
+      - "8080:8000"
+    environment:
+      PORT: "8000"
+    # Live code editing: mount source and let the app reload (dev mode)
+    volumes:
+      - ../hello-app:/app
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz')"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: devpass
+      POSTGRES_DB: app
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d app"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  cache:
+    image: redis:7-alpine
+    restart: unless-stopped
+
+volumes:
+  pgdata:

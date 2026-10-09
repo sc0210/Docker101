@@ -1,0 +1,11 @@
+# Normalize line endings: LF everywhere except Windows batch files.
+# Prevents "exec format error" / exit 127 when scripts run inside Linux containers.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.tar.gz binary
