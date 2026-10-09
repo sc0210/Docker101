@@ -697,9 +697,11 @@ volumes:
 
 - **Operate**: `up -d`, admin at `http://localhost:8090`
 - **Data**: `pihole` (`/etc/pihole`) — blocklists + config; back it up
-- **Ports**: `53` (DNS, tcp+udp) and `8090:80` (web). If `53` is taken (macOS
-  mDNSResponder / systemd-resolved / another container), map `8053:53` and point
-  clients at `host:8053`
+- **Ports**: `53` (DNS, tcp+udp) and `8090:80` (web). If `53` is taken (Docker
+  Desktop's own resolver, systemd-resolved, …), you can map `8053:53` and point
+  clients at `host:8053` — but DNS is **UDP**, and Docker Desktop's UDP
+  forwarding is unreliable, so the clean fix is to run Pi-hole on a Linux host
+  that can bind `53` (using `network_mode: host` there)
 - **SSH**: none
 
 ## Recipe 14 — Home Assistant — smart home

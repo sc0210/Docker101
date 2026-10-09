@@ -1,7 +1,9 @@
 # Pi-hole v6 — DNS sinkhole + web UI.
-# NOTE: DNS uses host port 53. If something already listens on 53 (macOS
-# mDNSResponder, systemd-resolved, another container), either free it or map a
-# high port (e.g. "8053:53") and point clients at host:8053.
+# NOTE: DNS uses host port 53. If something already listens on 53 (Docker
+# Desktop's own resolver, systemd-resolved, another container), either free it or
+# map a high port (e.g. "8053:53") and point clients at host:8053. DNS is UDP and
+# Docker Desktop's UDP forwarding is unreliable, so the clean fix on Desktop is to
+# run Pi-hole on a Linux host with network_mode: host instead.
 services:
   pihole:
     image: pihole/pihole:latest
